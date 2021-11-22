@@ -81,6 +81,7 @@ class Simulation:
 
         if self.simulation_run:
             self.csv_writer.write_to_file(self.transfer.get_sectors_data())
+            self.csv_writer.wrtie_indiv_1(self.transfer.get_sectors_data())
 
         return self.sectors_data, self.simulation_run
 
@@ -141,5 +142,6 @@ class Simulation:
 
             print(time_elapsed)
 
+        self.csv_writer.save_to_file()
         self.csv_writer.close_file()
         print('Simulation done.')
