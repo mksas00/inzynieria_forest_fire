@@ -80,8 +80,10 @@ class Simulation:
         self.sectors_data = self.transfer.get_sectors_data()
 
         if self.simulation_run:
-            self.csv_writer.write_to_file(self.transfer.get_sectors_data())
+            # self.csv_writer.write_to_file(self.transfer.get_sectors_data())
             self.csv_writer.wrtie_indiv_1(self.transfer.get_sectors_data())
+            self.csv_writer.wrtie_indiv_2(self.transfer.get_sectors_data())
+            Csv_writer.iterator += 1
 
         return self.sectors_data, self.simulation_run
 
