@@ -46,7 +46,7 @@ class Simulation:
         # Flaga informująca o statusie uruchomienia symulacji.
         self.simulation_run = False
 
-        self.csv_writer = Csv_writer()
+        self.csv_writer = Csv_writer(self.firefighters_limit)
 
     def set_settings(self, settings: dict) -> None:
         """
@@ -127,11 +127,11 @@ class Simulation:
             # Funkcja odpowiedzialna za rozprzestrzenianie się ognia.
             self.forest_area.spread_fire()
 
-            if self.simulation_run:
-                # self.csv_writer.write_to_file(self.transfer.get_sectors_data())
-                self.csv_writer.wrtie_indiv_1(self.transfer.get_sectors_data())
-                self.csv_writer.wrtie_indiv_2(self.transfer.get_sectors_data())
-                Csv_writer.iterator += 1
+            self.csv_writer.write_indiv_1(self.transfer.get_sectors_data())
+            self.csv_writer.write_indiv_2(self.transfer.get_sectors_data())
+            self.csv_writer.write_activity(list(Firefighter.locations.values()))
+            self.csv_writer.write_activity_locations(self.transfer.get_sectors_data())
+            Csv_writer.iterator += 1
 
             # Symulacja zatrzymuje się, jeżeli wszystkie sektory, które
             if not self.forest_area.forest_on_fire:

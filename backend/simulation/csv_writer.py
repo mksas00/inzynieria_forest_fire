@@ -4,15 +4,31 @@ import csv
 class Csv_writer:
     iterator = 0
 
-    def __init__(self):
+    def __init__(self, firefighters):
         self.file = open('simulation_data.csv', 'w', encoding='utf-8', newline='')
         self.file2 = open('simulation_individuality_1.csv', 'w', encoding='utf-8', newline='')
         self.file3 = open('simulation_individuality_2.csv', 'w', encoding='utf-8', newline='')
+        self.file4 = open('simulation_activity.csv', 'w', encoding='utf-8', newline='')
+        self.file5 = open('simulation_activity_locations.csv', 'w', encoding='utf-8', newline='')
         self.indiv_1_data = list()
         self.indiv_2_data = list()
+        self.sectors_types = list()
+
+        for x in range(20):
+            self.sectors_types.append([])
+
+        print(self.sectors_types)
         for x in range(800):
             self.indiv_1_data.append([[], [], [], [], []])
             self.indiv_2_data.append([[], [], [], []])
+
+        self.firefighters_limit = firefighters
+        self.firefighters_list = list()
+
+        for x in range(self.firefighters_limit):
+            self.firefighters_list.append([])
+
+        print(self.firefighters_list)
 
     # def write_to_file(self, secotrs_data):
     #
@@ -39,7 +55,7 @@ class Csv_writer:
     #
     #     Csv_writer.iterator += 1
 
-    def wrtie_indiv_1(self, sectors_data):
+    def write_indiv_1(self, sectors_data):
         i = 0
 
         for key, values in sectors_data.items():
@@ -56,7 +72,7 @@ class Csv_writer:
             self.indiv_1_data[i][4].append(values['wind_speed'])
             i += 1
 
-    def wrtie_indiv_2(self, sectors_data):
+    def write_indiv_2(self, sectors_data):
         i = 0
         for key, values in sectors_data.items():
             if Csv_writer.iterator == 0:
@@ -70,27 +86,74 @@ class Csv_writer:
             self.indiv_2_data[i][3].append(values['pm25'])
             i += 1
 
+    def write_activity(self, firefighter_locations):
+        i = 0
+        if Csv_writer.iterator == 0:
+            for x in self.firefighters_list:
+                x.append('Wóż strażacki nr: ' + str(i+1))
+                i += 1
+
+        i2 = 0
+        for y in range(self.firefighters_limit):
+            if i2 < len(firefighter_locations):
+                self.firefighters_list[i2].append(firefighter_locations[i2])
+            else:
+                self.firefighters_list[i2].append('')
+            i2 += 1
+
+        print(firefighter_locations)
+
+    def write_activity_locations(self, sectors_data):
+        if Csv_writer.iterator == 0:
+            i = 0
+            keys = sectors_data.keys()
+            print(keys)
+            for x in self.sectors_types:
+
+                for y in range(40):
+                    if i in keys:
+                        x.append(sectors_data[i]['forest_type'])
+                    else:
+                        x.append('0')
+                    i += 1
+
+
     def save_to_file(self):
 
         csvwriter = csv.writer(self.file2)
         csvwriter_2 = csv.writer(self.file3)
+        csvwriter_3 = csv.writer(self.file4)
+        csvwriter_4 = csv.writer(self.file5)
+
         header = list()
         header.append('Nr iteracji')
 
         for i in range(Csv_writer.iterator):
-            header.append(i+1)
+            header.append(i + 1)
+
         csvwriter.writerow(header)
         csvwriter_2.writerow(header)
+        csvwriter_3.writerow(header)
+
 
         for x in self.indiv_1_data:
             csvwriter.writerows(x)
 
-
         for x in self.indiv_2_data:
             csvwriter_2.writerows(x)
+
+        csvwriter_3.writerows(self.firefighters_list)
+        csvwriter_4.writerows(self.sectors_types)
+
+        location_descriptions = [['Rodzaje lasu: '],['Brak lasu','0'],['Las liściasty','1'],['Las mieszany','2'],['Las iglasty','3']]
+
+        csvwriter_4.writerows(location_descriptions)
 
     def close_file(self):
         self.file.close()
         self.file2.close()
+        self.file3.close()
+        self.file4.close()
+        self.file5.close()
         print("Liczba iteracji: " + str(Csv_writer.iterator))
         Csv_writer.iterator = 0
