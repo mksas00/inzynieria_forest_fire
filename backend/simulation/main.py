@@ -3,6 +3,7 @@ from typing import Tuple
 
 from .area import ForestArea
 from .agents import *
+from .csv_writer import *
 
 
 class Simulation:
@@ -45,6 +46,8 @@ class Simulation:
         # Flaga informująca o statusie uruchomienia symulacji.
         self.simulation_run = False
 
+        self.csv_writer = Csv_writer()
+
     def set_settings(self, settings: dict) -> None:
         """
         Konfiguracja symulacji na podstawie słownika settings.
@@ -75,6 +78,9 @@ class Simulation:
         Zwraca JSON-a z aktualnymi informacjami na temat sektorów lasu.
         """
         self.sectors_data = self.transfer.get_sectors_data()
+
+        if self.simulation_run:
+            self.csv_writer.write_to_file(self.transfer.get_sectors_data())
 
         return self.sectors_data, self.simulation_run
 
@@ -135,4 +141,5 @@ class Simulation:
 
             print(time_elapsed)
 
+        self.csv_writer.close_file()
         print('Simulation done.')
