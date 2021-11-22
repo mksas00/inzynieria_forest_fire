@@ -79,12 +79,6 @@ class Simulation:
         """
         self.sectors_data = self.transfer.get_sectors_data()
 
-        if self.simulation_run:
-            # self.csv_writer.write_to_file(self.transfer.get_sectors_data())
-            self.csv_writer.wrtie_indiv_1(self.transfer.get_sectors_data())
-            self.csv_writer.wrtie_indiv_2(self.transfer.get_sectors_data())
-            Csv_writer.iterator += 1
-
         return self.sectors_data, self.simulation_run
 
     def get_particular_sector_data(self, sector_id: int) -> dict:
@@ -132,6 +126,12 @@ class Simulation:
 
             # Funkcja odpowiedzialna za rozprzestrzenianie się ognia.
             self.forest_area.spread_fire()
+
+            if self.simulation_run:
+                # self.csv_writer.write_to_file(self.transfer.get_sectors_data())
+                self.csv_writer.wrtie_indiv_1(self.transfer.get_sectors_data())
+                self.csv_writer.wrtie_indiv_2(self.transfer.get_sectors_data())
+                Csv_writer.iterator += 1
 
             # Symulacja zatrzymuje się, jeżeli wszystkie sektory, które
             if not self.forest_area.forest_on_fire:

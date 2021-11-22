@@ -7,7 +7,7 @@ class Csv_writer:
     def __init__(self):
         self.file = open('simulation_data.csv', 'w', encoding='utf-8', newline='')
         self.file2 = open('simulation_individuality_1.csv', 'w', encoding='utf-8', newline='')
-        self.file3 = open('simulation_individuality_1.csv', 'w', encoding='utf-8', newline='')
+        self.file3 = open('simulation_individuality_2.csv', 'w', encoding='utf-8', newline='')
         self.indiv_1_data = list()
         self.indiv_2_data = list()
         for x in range(800):
