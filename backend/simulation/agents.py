@@ -70,6 +70,7 @@ class Firefighter:
 
     move_speed = 1
     locations = dict()
+    ugaszono = dict()
 
     def __init__(self, forest_area, uid: int, order_sector_id: int, order_i: int, order_j: int) -> None:
         self.forest_area = forest_area
@@ -120,6 +121,10 @@ class Firefighter:
             self.sector.on_fire = False
             self.sector.state = 5
             self.sector.can_spread = False
+
+            # Firefighter.ugaszono.update({self.id: self.sector_id})
+            Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
+
             self.forest_area.sectors_on_fire.remove(self.sector_id)
             self.get_new_order()
 

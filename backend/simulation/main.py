@@ -119,14 +119,14 @@ class Simulation:
             # Strażacy poruszają się w stronę ogniska pożaru gasząc ewentualne ogniska pożarów po drodze.
             for firefighter in self.firefighters.values():
                 firefighter.move()
-
             # Aktualizacja pozycji strażaków na obszarze lasu. Ma to wpływ na rozprzestrzenianie się pożaru.
             self.forest_area.firefighters_locations = list(Firefighter.locations.values())
-            print(len(list(Firefighter.locations.values())))
+            # print(len(list(Firefighter.locations.values())))
+            # print(list(firefighter.locations.values()))
 
             # Funkcja odpowiedzialna za rozprzestrzenianie się ognia.
             self.forest_area.spread_fire()
-
+            print((firefighter.ugaszono))
             self.csv_writer.write_indiv_1(self.transfer.get_sectors_data())
             self.csv_writer.write_indiv_2(self.transfer.get_sectors_data())
             self.csv_writer.write_activity(list(Firefighter.locations.values()))
