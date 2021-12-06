@@ -125,18 +125,18 @@ class Firefighter:
             self.sector.on_fire = False
             self.sector.state = 5
             self.sector.can_spread = False
-            result = [k for k in Firefighter.locations.keys() if Firefighter.locations[k] == self.sector_id
-                      or Firefighter.locations[k] == self.sector_id + 1
-                      or Firefighter.locations[k] == self.sector_id - 1
-                      or Firefighter.locations[k] == self.sector_id - 40
-                      or Firefighter.locations[k] == self.sector_id + 40
-                      or Firefighter.locations[k] == self.sector_id - 41
-                      or Firefighter.locations[k] == self.sector_id - 39
-                      or Firefighter.locations[k] == self.sector_id + 41
-                      or Firefighter.locations[k] == self.sector_id + 39]
-            if result:
-                for x in range(len(result)):
-                    Firefighter.ugaszono.setdefault(x, []).append(Firefighter.locations[result[x]])
+            # result = [k for k in Firefighter.locations.keys() if Firefighter.locations[k] == self.sector_id
+            #           or Firefighter.locations[k] == self.sector_id + 1
+            #           or Firefighter.locations[k] == self.sector_id - 1
+            #           or Firefighter.locations[k] == self.sector_id - 40
+            #           or Firefighter.locations[k] == self.sector_id + 40
+            #           or Firefighter.locations[k] == self.sector_id - 41
+            #           or Firefighter.locations[k] == self.sector_id - 39
+            #           or Firefighter.locations[k] == self.sector_id + 41
+            #           or Firefighter.locations[k] == self.sector_id + 39]
+            # if result:
+            #     for x in range(len(result)):
+            #         Firefighter.ugaszono.setdefault(x, []).append(Firefighter.locations[result[x]])
 
             # Firefighter.ugaszono.update({self.id: self.sector_id})
             # Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
