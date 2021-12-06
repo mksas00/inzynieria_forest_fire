@@ -188,11 +188,4 @@ class Csv_writer:
         print("Liczba iteracji: " + str(Csv_writer.iterator))
         Csv_writer.iterator = 0
 
-    # def kalk(self,sector ):
-    #     x = int(sector / 40)
-    #     z = x % 40
-    #     y = list()
-    #     y = [x,z]
-    #     return y
-
 
