@@ -127,6 +127,7 @@ class Simulation:
             # Funkcja odpowiedzialna za rozprzestrzenianie się ognia.
             self.forest_area.spread_fire()
             print((firefighter.ugaszono))
+            print((firefighter.ugaszono))
             self.csv_writer.write_indiv_1(self.transfer.get_sectors_data())
             self.csv_writer.write_indiv_2(self.transfer.get_sectors_data())
             self.csv_writer.write_activity(list(Firefighter.locations.values()))
@@ -142,7 +143,7 @@ class Simulation:
             if time_elapsed < self.min_loop_time:
                 sleep(self.min_loop_time - time_elapsed)
 
-            print(time_elapsed)
+            # print(time_elapsed)
 
         self.csv_writer.save_to_file()
         self.csv_writer.close_file()

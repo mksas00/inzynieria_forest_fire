@@ -87,6 +87,10 @@ class Firefighter:
     def __repr__(self) -> str:
         return str(self.id)
 
+
+
+
+
     def move(self) -> None:
         if self.i > self.order_i:
             self.i -= self.move_speed
@@ -121,12 +125,26 @@ class Firefighter:
             self.sector.on_fire = False
             self.sector.state = 5
             self.sector.can_spread = False
+            result = [k for k in Firefighter.locations.keys() if Firefighter.locations[k] == self.sector_id
+                      or Firefighter.locations[k] == self.sector_id + 1
+                      or Firefighter.locations[k] == self.sector_id - 1
+                      or Firefighter.locations[k] == self.sector_id - 40
+                      or Firefighter.locations[k] == self.sector_id + 40
+                      or Firefighter.locations[k] == self.sector_id - 41
+                      or Firefighter.locations[k] == self.sector_id - 39
+                      or Firefighter.locations[k] == self.sector_id + 41
+                      or Firefighter.locations[k] == self.sector_id + 39]
+            if result:
+                for x in range(len(result)):
+                    Firefighter.ugaszono.setdefault(x, []).append(Firefighter.locations[result[x]])
 
             # Firefighter.ugaszono.update({self.id: self.sector_id})
-            Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
-
+            # Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
+            # Firefighter.ugaszono.update(Firefighter())
             self.forest_area.sectors_on_fire.remove(self.sector_id)
             self.get_new_order()
+
+
 
     def get_new_order(self) -> None:
         if self.forest_area.forest_on_fire:
@@ -134,6 +152,7 @@ class Firefighter:
             order_sector = self.forest_area.sectors[self.order_sector_id]
             self.order_i = order_sector.i
             self.order_j = order_sector.j
+
 
     def get_closest_on_fire_sector(self):
         min_distance = 1000
