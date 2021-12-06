@@ -1,11 +1,11 @@
 import csv
-
+from .agents import *
 
 class Csv_writer:
     iterator = 0
 
     def __init__(self, firefighters):
-        self.file = open('simulation_data.csv', 'w', encoding='utf-8', newline='')
+        # self.file = open('simulation_data.csv', 'w', encoding='utf-8', newline='')
         self.file2 = open('simulation_individuality_1.csv', 'w', encoding='utf-8', newline='')
         self.file3 = open('simulation_individuality_2.csv', 'w', encoding='utf-8', newline='')
         self.file4 = open('simulation_activity.csv', 'w', encoding='utf-8', newline='')
@@ -17,7 +17,7 @@ class Csv_writer:
         for x in range(20):
             self.sectors_types.append([])
 
-        print(self.sectors_types)
+        # print(self.sectors_types)
         for x in range(800):
             self.indiv_1_data.append([[], [], [], [], []])
             self.indiv_2_data.append([[], [], [], []])
@@ -28,7 +28,8 @@ class Csv_writer:
         for x in range(self.firefighters_limit):
             self.firefighters_list.append([])
 
-        print(self.firefighters_list)
+
+        # print(self.firefighters_list)
 
     # def write_to_file(self, secotrs_data):
     #
@@ -101,13 +102,13 @@ class Csv_writer:
                 self.firefighters_list[i2].append('')
             i2 += 1
 
-        print(firefighter_locations)
+        # print(firefighter_locations)
 
     def write_activity_locations(self, sectors_data):
         if Csv_writer.iterator == 0:
             i = 0
             keys = sectors_data.keys()
-            print(keys)
+            # print(keys)
             for x in self.sectors_types:
 
                 for y in range(40):
@@ -116,6 +117,32 @@ class Csv_writer:
                     else:
                         x.append('0')
                     i += 1
+
+
+
+
+    def save_extinguished_fires(self):
+        csvwriter = csv.writer(self.file4)
+        csvwriter.writerow(['Pożary ugaszone przez wozy strażackie: '])
+        csvwriter.writerow([])
+
+        # print('xddddddddd &&&')
+        # print(Firefighter.ugaszono)
+        # print('xddddddddd &&&')
+        #
+        # print(Firefighter.ugaszono.keys())
+        # print(Firefighter.ugaszono.values())
+
+        i = 1
+        for values in Firefighter.ugaszono.values():
+            out1 = ['Wóz strażacki nr: ', i]
+            out2 = ['Sektory: ']
+            for x in values:
+                out2.append(x)
+            i += 1
+            csvwriter.writerow(out1)
+            csvwriter.writerow(out2)
+
 
 
 
@@ -144,14 +171,16 @@ class Csv_writer:
             csvwriter_2.writerows(x)
 
         csvwriter_3.writerows(self.firefighters_list)
+        csvwriter_3.writerows([[],[],[]])
         csvwriter_4.writerows(self.sectors_types)
 
-        location_descriptions = [['Rodzaje lasu: '],['Brak lasu','0'],['Las liściasty','1'],['Las mieszany','2'],['Las iglasty','3']]
+        location_descriptions = [['Rodzaje lasu: '],['Brak lasu','0'],['Las liściasty','1'],['Las mieszany','2'], ['Las iglasty', '3']]
 
         csvwriter_4.writerows(location_descriptions)
 
     def close_file(self):
-        self.file.close()
+        # self.file.close()
+        self.save_extinguished_fires()
         self.file2.close()
         self.file3.close()
         self.file4.close()

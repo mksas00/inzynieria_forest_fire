@@ -126,7 +126,9 @@ class Simulation:
 
             # Funkcja odpowiedzialna za rozprzestrzenianie się ognia.
             self.forest_area.spread_fire()
-            print((firefighter.ugaszono))
+
+            # Zapisywanie danych symulacji do plików CSV
+
             print((firefighter.ugaszono))
             self.csv_writer.write_indiv_1(self.transfer.get_sectors_data())
             self.csv_writer.write_indiv_2(self.transfer.get_sectors_data())

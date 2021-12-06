@@ -48,6 +48,8 @@ class Overseer:
         self.firefighters_called_on = list()
 
     def call_firefighters(self, on_fire_diff: int) -> dict:
+        print(self.firefighters_called_on)
+        print("fire fighters called on ^")
         if on_fire_diff > 0:
             for sector_id in self.forest_area.sectors_on_fire:
                 if sector_id not in self.firefighters_called_on:
@@ -71,6 +73,8 @@ class Firefighter:
     move_speed = 1
     locations = dict()
     ugaszono = dict()
+
+
 
     def __init__(self, forest_area, uid: int, order_sector_id: int, order_i: int, order_j: int) -> None:
         self.forest_area = forest_area
@@ -136,10 +140,12 @@ class Firefighter:
             #           or Firefighter.locations[k] == self.sector_id + 39]
             # if result:
             #     for x in range(len(result)):
-            #         Firefighter.ugaszono.setdefault(x, []).append(Firefighter.locations[result[x]])
+            # Firefighter.ugaszono.setdefault(x, []).append(Firefighter.locations[result[x]])
+
+            # result = [k for k in Firefighter.locations.keys() if self.sector_id in Firefighter.locations[k]]
 
             # Firefighter.ugaszono.update({self.id: self.sector_id})
-            # Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
+            Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
             # Firefighter.ugaszono.update(Firefighter())
             self.forest_area.sectors_on_fire.remove(self.sector_id)
             self.get_new_order()
