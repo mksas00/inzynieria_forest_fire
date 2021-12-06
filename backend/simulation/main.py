@@ -129,7 +129,9 @@ class Simulation:
 
             # Zapisywanie danych symulacji do plików CSV
 
-            print((firefighter.ugaszono))
+
+            print(self.forest_area.get_sector_distance(305,205))
+            print(self.forest_area.sectors_on_fire)
             self.csv_writer.write_indiv_1(self.transfer.get_sectors_data())
             self.csv_writer.write_indiv_2(self.transfer.get_sectors_data())
             self.csv_writer.write_activity(list(Firefighter.locations.values()))
