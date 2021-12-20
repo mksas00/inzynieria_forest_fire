@@ -1,5 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
+import os
+import glob
 
 from .agents import *
 
@@ -36,6 +38,9 @@ class Csv_writer:
 
 
     def save_indiv_1_graphs(self):
+        files = glob.glob('.\graphs\indiv_1\*')
+        for f in files:
+            os.remove(f)
         iteracje = [x for x in range(1, Csv_writer.iterator+1)]
 
         title = ''

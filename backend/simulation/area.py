@@ -129,7 +129,6 @@ class ForestArea:
 
     def get_sector_distance(self, sector1, sector2):
 
-
         return self.get_distance(int(sector1 / 40), int(sector1 % 40), int(sector2 / 40), int(sector2 % 40))
 
     @staticmethod
