@@ -1,4 +1,6 @@
 import csv
+import matplotlib.pyplot as plt
+
 from .agents import *
 
 class Csv_writer:
@@ -13,6 +15,8 @@ class Csv_writer:
         self.indiv_1_data = list()
         self.indiv_2_data = list()
         self.sectors_types = list()
+        self.graph_indiv_1_data = list()
+        self.graph_indiv_2_data = list()
 
         for x in range(20):
             self.sectors_types.append([])
@@ -20,7 +24,9 @@ class Csv_writer:
         # print(self.sectors_types)
         for x in range(800):
             self.indiv_1_data.append([[], [], [], [], []])
+            self.graph_indiv_1_data.append([[], [], [], [], [], []])
             self.indiv_2_data.append([[], [], [], []])
+            self.graph_indiv_2_data.append([[], [], [], [], []])
 
         self.firefighters_limit = firefighters
         self.firefighters_list = list()
@@ -29,32 +35,33 @@ class Csv_writer:
             self.firefighters_list.append([])
 
 
-        # print(self.firefighters_list)
+    def save_indiv_1_graphs(self):
+        iteracje = [x for x in range(1, Csv_writer.iterator+1)]
 
-    # def write_to_file(self, secotrs_data):
-    #
-    #     fieldnames = ['i', 'j', 'forest_type', 'is_fire_source', 'temperature', 'air_humidity', 'litter_moisture',
-    #                   'wind_speed', 'wind_directory', 'CO2', 'pm25', 'sector_state', 'ffdi', 'on_fire']
-    #     csvwriter = csv.writer(self.file)
-    #
-    #     row_list = list()
-    #
-    #     if Csv_writer.iterator == 0:
-    #         csvwriter.writerow(fieldnames)
-    #         # csvwriter.writerow(['Iteracja numer:', str(Csv_writer.iterator)])
-    #     else:
-    #         for key, values in secotrs_data.items():
-    #             for key2, values2 in values.items():
-    #                 row_list.append(str(values[key2]))
-    #
-    #             csvwriter.writerow(row_list)
-    #             row_list.clear()
-    #
-    #     if Csv_writer.iterator > 0:
-    #         csvwriter.writerow([''])
-    #         csvwriter.writerow([''])
-    #
-    #     Csv_writer.iterator += 1
+        title = ''
+        i = 0
+
+        for sectors in self.graph_indiv_1_data:
+            if sectors[5][0] is not None:
+
+                print(sectors[1][0])
+                print(((sum(sectors[1])) / len(sectors[1])))
+                if abs(((sum(sectors[1])) / len(sectors[1])) - sectors[1][0])>1:
+                    figure = plt.figure()
+                    plt.plot(iteracje, sectors[1])
+                    plt.plot(iteracje, sectors[2])
+                    plt.plot(iteracje, sectors[3])
+                    plt.plot(iteracje, sectors[4])
+                    title = sectors[0][0]
+                    i += 1
+
+                    plt.title('Idividualtiy_1 for sector ' + title)
+                    plt.legend(['Temperatura', 'Wilgotność Powietrza', 'Wilgotność Ściółki', 'Prędkość Wiatru'])
+                    plt.savefig('.\graphs\indiv_1\sector_' + title)
+                    plt.close(figure)
+
+
+
 
     def write_indiv_1(self, sectors_data):
         i = 0
@@ -66,11 +73,18 @@ class Csv_writer:
                 self.indiv_1_data[i][2].append('Wilgotność powietrza')
                 self.indiv_1_data[i][3].append('Wilgotność Ściółki')
                 self.indiv_1_data[i][4].append('Prędkość Wiatru')
+                self.graph_indiv_1_data[i][0].append(str(key))
 
             self.indiv_1_data[i][1].append(values['temperature'])
             self.indiv_1_data[i][2].append(values['air_humidity'])
             self.indiv_1_data[i][3].append(values['litter_moisture'])
             self.indiv_1_data[i][4].append(values['wind_speed'])
+
+            self.graph_indiv_1_data[i][1].append(values['temperature'])
+            self.graph_indiv_1_data[i][2].append(values['air_humidity'])
+            self.graph_indiv_1_data[i][3].append(values['litter_moisture'])
+            self.graph_indiv_1_data[i][4].append(values['wind_speed'])
+            self.graph_indiv_1_data[i][5].append(values['sector_state'])
             i += 1
 
     def write_indiv_2(self, sectors_data):
@@ -126,12 +140,7 @@ class Csv_writer:
         csvwriter.writerow(['Pożary ugaszone przez wozy strażackie: '])
         csvwriter.writerow([])
 
-        # print('xddddddddd &&&')
-        # print(Firefighter.ugaszono)
-        # print('xddddddddd &&&')
-        #
-        # print(Firefighter.ugaszono.keys())
-        # print(Firefighter.ugaszono.values())
+
 
         i = 1
         for values in Firefighter.ugaszono.values():
@@ -174,7 +183,7 @@ class Csv_writer:
         csvwriter_3.writerows([[],[],[]])
         csvwriter_4.writerows(self.sectors_types)
 
-        location_descriptions = [['Rodzaje lasu: '],['Brak lasu','0'],['Las liściasty','1'],['Las mieszany','2'], ['Las iglasty', '3']]
+        location_descriptions = [['Rodzaje lasu: '], ['Brak lasu', '0'], ['Las liściasty', '1'], ['Las mieszany','2'], ['Las iglasty','3']]
 
         csvwriter_4.writerows(location_descriptions)
 
@@ -186,4 +195,5 @@ class Csv_writer:
         self.file4.close()
         self.file5.close()
         print("Liczba iteracji: " + str(Csv_writer.iterator))
+
         Csv_writer.iterator = 0

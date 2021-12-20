@@ -148,5 +148,7 @@ class Simulation:
             # print(time_elapsed)
 
         self.csv_writer.save_to_file()
+        self.csv_writer.save_indiv_1_graphs()
         self.csv_writer.close_file()
+
         print('Simulation done.')

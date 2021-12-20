@@ -43,7 +43,7 @@ class ForestArea:
             j = sector['j']
             forest_type = sector['forestType']
             is_fire_source = sector['isFireSource']
-            self.sectors[sector_id] = ForestSector( sector_id, i, j, forest_type, is_fire_source)
+            self.sectors[sector_id] = ForestSector(sector_id, i, j, forest_type, is_fire_source)
             self.sectors[sector_id].neighbor_ids = self.get_direct_neighbor_ids(i, j)
 
     def prepare_sector_buffors(self, data: dict) -> None:
