@@ -127,6 +127,11 @@ class ForestArea:
 
         return neigbhor_ids
 
+    def get_sector_distance(self, sector1, sector2):
+
+
+        return self.get_distance(int(sector1 / 40), int(sector1 % 40), int(sector2 / 40), int(sector2 % 40))
+
     @staticmethod
     def get_distance(i1: int, j1: int, i2: int, j2: int) -> float:
         """

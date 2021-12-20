@@ -197,3 +197,5 @@ class Csv_writer:
         print("Liczba iteracji: " + str(Csv_writer.iterator))
 
         Csv_writer.iterator = 0
+
+
