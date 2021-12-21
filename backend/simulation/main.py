@@ -136,6 +136,7 @@ class Simulation:
             self.csv_writer.write_indiv_2(self.transfer.get_sectors_data())
             self.csv_writer.write_activity(list(Firefighter.locations.values()))
             self.csv_writer.write_activity_locations(self.transfer.get_sectors_data())
+            self.csv_writer.save_sectors_on_fire(self.forest_area.get_sectors_on_fire())
             Csv_writer.iterator += 1
 
             # Symulacja zatrzymuje się, jeżeli wszystkie sektory, które
@@ -151,6 +152,8 @@ class Simulation:
 
         self.csv_writer.save_to_file()
         self.csv_writer.save_indiv_1_graphs()
+        self.csv_writer.save_indiv_2_graphs()
+        self.csv_writer.save_fire_graph()
         self.csv_writer.close_file()
 
         print('Simulation done.')

@@ -65,6 +65,10 @@ class ForestArea:
 
         self.fire_initted = True
 
+    def get_sectors_on_fire(self):
+        return self.sectors_on_fire
+
+
     def init_sensors(self) -> dict:
         """
         Rozstawienie czujników na planszy. Czujniki są wstawiane od określonego przez ustalony sektor czujnika pola.

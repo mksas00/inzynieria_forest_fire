@@ -19,6 +19,7 @@ class Csv_writer:
         self.sectors_types = list()
         self.graph_indiv_1_data = list()
         self.graph_indiv_2_data = list()
+        self.sectors_on_fire = list()
 
         for x in range(20):
             self.sectors_types.append([])
@@ -49,8 +50,6 @@ class Csv_writer:
         for sectors in self.graph_indiv_1_data:
             if sectors[5][0] is not None:
 
-                print(sectors[1][0])
-                print(((sum(sectors[1])) / len(sectors[1])))
                 if abs(((sum(sectors[1])) / len(sectors[1])) - sectors[1][0])>1:
                     figure = plt.figure()
                     plt.plot(iteracje, sectors[1])
@@ -65,7 +64,47 @@ class Csv_writer:
                     plt.savefig('.\graphs\indiv_1\sector_' + title)
                     plt.close(figure)
 
+    def save_indiv_2_graphs(self):
+        files = glob.glob('.\graphs\indiv_2\*')
+        for f in files:
+            os.remove(f)
+        iteracje = [x for x in range(1, Csv_writer.iterator+1)]
 
+        title = ''
+        i = 0
+
+        for sectors in self.graph_indiv_2_data:
+            if sectors[4][0] is not None:
+
+                if abs(((sum(sectors[2])) / len(sectors[2])) - sectors[2][0]) > 1:
+                    figure = plt.figure()
+                    plt.plot(iteracje, sectors[1])
+                    plt.plot(iteracje, sectors[2])
+                    plt.plot(iteracje, sectors[3])
+                    title = sectors[0][0]
+                    i += 1
+                    plt.xlabel('Iteracje')
+                    plt.title('Idividualtiy_2 for sector ' + title)
+                    plt.legend(['Prędkość Wiatru', 'Stężenie CO2', 'Stężenie PM2.5'])
+                    plt.savefig('.\graphs\indiv_2\sector_' + title)
+                    plt.close(figure)
+
+
+    def save_sectors_on_fire(self,sectors_on_fire):
+        self.sectors_on_fire.append(len(sectors_on_fire))
+
+    def save_fire_graph(self):
+
+        iteracje = [x for x in range (1,Csv_writer.iterator+1)]
+
+        print(iteracje, self.sectors_on_fire)
+        figure = plt.figure()
+        plt.plot(iteracje, self.sectors_on_fire)
+        plt.xlabel('Iteracje')
+        plt.title('Palące się sektorów względem czasu')
+        plt.ylabel('Aktualnie palące się sektory')
+        plt.savefig('.\graphs\sectors_on_fire')
+        plt.close(figure)
 
 
     def write_indiv_1(self, sectors_data):
@@ -100,10 +139,16 @@ class Csv_writer:
                 self.indiv_2_data[i][1].append('Prędkość Wiatru')
                 self.indiv_2_data[i][2].append('Stężenie CO2')
                 self.indiv_2_data[i][3].append('Stężenie PM2.5')
+                self.graph_indiv_2_data[i][0].append(str(key))
 
             self.indiv_2_data[i][1].append(values['wind_speed'])
             self.indiv_2_data[i][2].append(values['co2'])
             self.indiv_2_data[i][3].append(values['pm25'])
+
+            self.graph_indiv_2_data[i][1].append(values['wind_speed'])
+            self.graph_indiv_2_data[i][2].append(values['co2'])
+            self.graph_indiv_2_data[i][3].append(values['pm25'])
+            self.graph_indiv_2_data[i][4].append(values['sector_state'])
             i += 1
 
     def write_activity(self, firefighter_locations):
