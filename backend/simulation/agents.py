@@ -132,39 +132,60 @@ class Firefighter:
         self.sector.firefighter_present = True
         self.emotion = random.randint(-1, 1)
 
-        if (self.emotion == 1):
+
+        if (self.emotion == 1 and self.sector.state < 7):
             self.sector.state = self.sector.state + self.emotion
             self.sector.fuel += 80
-            if self.sector.fuel >= 1000:
-                self.sector.fuel = 1000
-                self.sector.on_fire = False
-                self.sector.state = 5
-                self.sector.can_spread = False
-                Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
-                self.forest_area.sectors_on_fire.remove(self.sector_id)
-                self.get_new_order()
         elif (self.emotion == 0):
             self.sector.state = self.sector.state + self.emotion
             self.sector.fuel += 100
-            if self.sector.fuel >= 1000:
-                self.sector.fuel = 1000
-                self.sector.on_fire = False
-                self.sector.state = 5
-                self.sector.can_spread = False
-                Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
-                self.forest_area.sectors_on_fire.remove(self.sector_id)
-                self.get_new_order()
         elif (self.emotion == -1):
             self.sector.state = self.sector.state + self.emotion
-            self.sector.fuel += 110
-            if self.sector.fuel >= 1000:
-                self.sector.fuel = 1000
-                self.sector.on_fire = False
-                self.sector.state = 5
-                self.sector.can_spread = False
-                Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
-                self.forest_area.sectors_on_fire.remove(self.sector_id)
-                self.get_new_order()
+            self.sector.fuel += 120
+        else:
+            self.sector.fuel += 100
+
+        if self.sector.fuel >= 1000:
+            self.sector.fuel = 1000
+            self.sector.on_fire = False
+            self.sector.state = 5
+            self.sector.can_spread = False
+            Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
+            self.forest_area.sectors_on_fire.remove(self.sector_id)
+            self.get_new_order()
+
+        #     self.sector.state = self.sector.state + self.emotion
+        #     self.sector.fuel += 80
+        #     if self.sector.fuel >= 1000:
+        #         self.sector.fuel = 1000
+        #         self.sector.on_fire = False
+        #         self.sector.state = 5
+        #         self.sector.can_spread = False
+        #         Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
+        #         self.forest_area.sectors_on_fire.remove(self.sector_id)
+        #         self.get_new_order()
+        # elif (self.emotion == 0):
+        #     self.sector.state = self.sector.state + self.emotion
+        #     self.sector.fuel += 100
+        #     if self.sector.fuel >= 1000:
+        #         self.sector.fuel = 1000
+        #         self.sector.on_fire = False
+        #         self.sector.state = 5
+        #         self.sector.can_spread = False
+        #         Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
+        #         self.forest_area.sectors_on_fire.remove(self.sector_id)
+        #         self.get_new_order()
+        # elif (self.emotion == -1):
+        #     self.sector.state = self.sector.state + self.emotion
+        #     self.sector.fuel += 110
+        #     if self.sector.fuel >= 1000:
+        #         self.sector.fuel = 1000
+        #         self.sector.on_fire = False
+        #         self.sector.state = 5
+        #         self.sector.can_spread = False
+        #         Firefighter.ugaszono.setdefault(self.id, []).append(self.sector_id)
+        #         self.forest_area.sectors_on_fire.remove(self.sector_id)
+        #         self.get_new_order()
 
 
 
