@@ -133,7 +133,7 @@ class Firefighter:
         self.emotion = random.randint(-1, 1)
 
 
-        if (self.emotion == 1 and self.sector.state < 7):
+        if (self.emotion == 1 and self.sector.state < 8):
             self.sector.state = self.sector.state + self.emotion
             self.sector.fuel += 80
         elif (self.emotion == 0):
@@ -142,7 +142,7 @@ class Firefighter:
         elif (self.emotion == -1):
             self.sector.state = self.sector.state + self.emotion
             self.sector.fuel += 120
-        else:
+        elif (self.sector.state >= 8):
             self.sector.fuel += 100
 
         if self.sector.fuel >= 1000:
