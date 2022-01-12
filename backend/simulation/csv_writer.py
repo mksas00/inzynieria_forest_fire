@@ -37,11 +37,53 @@ class Csv_writer:
         for x in range(self.firefighters_limit):
             self.firefighters_list.append([])
 
+    def save_indiv_1_csv(self):
+
+        iteracje = [x for x in range(1, Csv_writer.iterator + 1)]
+
+        for sectors in self.graph_indiv_1_data:
+            file = open('.\graphs\indiv_1\sector_csv_' + sectors[0][0] + '.csv', 'w', encoding='utf-8', newline='')
+            csvwriter = csv.writer(file)
+            csvwriter.writerow(['Numer Iteracji', 'Temperatura', 'Wilgotność Powietrza', 'Wilgotność Ściółki', 'Prędkość wiatru'])
+            if sectors[5][0] is not None:
+
+                    for i in range(0, len(sectors[1])):
+                        csvLine = [[], [], [], [], []]
+
+                        csvLine[0] = iteracje[i]
+                        csvLine[1] = sectors[1][i]
+                        csvLine[2] = sectors[2][i]
+                        csvLine[3] = sectors[3][i]
+                        csvLine[4] = sectors[4][i]
+                        csvwriter.writerow(csvLine)
+
+
+
+    def save_indiv_2_csv(self):
+
+        iteracje = [x for x in range(1, Csv_writer.iterator + 1)]
+
+        for sectors in self.graph_indiv_2_data:
+            file = open('.\graphs\indiv_2\sector_csv_' + sectors[0][0] + '.csv', 'w', encoding='utf-8', newline='')
+            csvwriter = csv.writer(file)
+            csvwriter.writerow(['Numer Iteracji', 'Prędkość Wiatru', 'Stężenie CO2', 'Stężenie PM2.5'])
+            if sectors[4][0] is not None:
+
+                    for i in range(0, len(sectors[1])):
+                        csvLine = [[], [], [], []]
+
+                        csvLine[0] = iteracje[i]
+                        csvLine[1] = sectors[1][i]
+                        csvLine[2] = sectors[2][i]
+                        csvLine[3] = sectors[3][i]
+
+                        csvwriter.writerow(csvLine)
+
+
+
 
     def save_indiv_1_graphs(self):
-        files = glob.glob('.\graphs\indiv_1\*')
-        for f in files:
-            os.remove(f)
+
         iteracje = [x for x in range(1, Csv_writer.iterator+1)]
 
         title = ''
@@ -247,5 +289,14 @@ class Csv_writer:
         print("Liczba iteracji: " + str(Csv_writer.iterator))
 
         Csv_writer.iterator = 0
+
+    def deleteFiles(self):
+        files = glob.glob('.\graphs\indiv_1\*')
+        for f in files:
+            os.remove(f)
+
+        files = glob.glob('.\graphs\indiv_2\*')
+        for f in files:
+            os.remove(f)
 
 

@@ -91,8 +91,9 @@ class Simulation:
         """
         Zatrzymanie symulacji oraz przywrócene ustawień początkowych.
         """
-        self.__init__()
         self.simulation_run = False
+        self.__init__()
+
 
     def stop(self) -> None:
         """
@@ -105,6 +106,7 @@ class Simulation:
         Główna funkcja zarządzająca symulacją. Po właczeniu działa dopóki zmianu statusu symulacji.
         """
         self.simulation_run = True
+        self.csv_writer.deleteFiles()
 
         while self.simulation_run:
             # Mierzony jest czas wykonania głównej pętli, żeby sprawdzić, czy nie wykonuje się zbyt długo.
@@ -130,7 +132,7 @@ class Simulation:
             # Zapisywanie danych symulacji do plików CSV
 
 
-            print(self.forest_area.get_sector_distance(305,205))
+            # print(self.forest_area.get_sector_distance(305,205))
             print(self.forest_area.sectors_on_fire)
             self.csv_writer.write_indiv_1(self.transfer.get_sectors_data())
             self.csv_writer.write_indiv_2(self.transfer.get_sectors_data())
@@ -154,6 +156,8 @@ class Simulation:
         self.csv_writer.save_indiv_1_graphs()
         self.csv_writer.save_indiv_2_graphs()
         self.csv_writer.save_fire_graph()
+        self.csv_writer.save_indiv_1_csv()
+        self.csv_writer.save_indiv_2_csv()
         self.csv_writer.close_file()
 
         print('Simulation done.')
