@@ -14,6 +14,7 @@ class Csv_writer:
         self.file3 = open('simulation_individuality_2.csv', 'w', encoding='utf-8', newline='')
         self.file4 = open('simulation_activity.csv', 'w', encoding='utf-8', newline='')
         self.file5 = open('simulation_activity_locations.csv', 'w', encoding='utf-8', newline='')
+        self.file6 = open('spatial_proximity.csv', 'w', encoding='utf-8', newline='')
         self.indiv_1_data = list()
         self.indiv_2_data = list()
         self.sectors_types = list()
@@ -232,8 +233,6 @@ class Csv_writer:
         csvwriter.writerow(['Pożary ugaszone przez wozy strażackie: '])
         csvwriter.writerow([])
 
-
-
         i = 1
         for values in Firefighter.ugaszono.values():
             out1 = ['Wóz strażacki nr: ', i]
@@ -245,6 +244,20 @@ class Csv_writer:
             csvwriter.writerow(out2)
 
 
+
+    def write_firefighters_from_sectors_distance(self, firefightersSectorsData):
+        csvwriter = csv.writer(self.file6)
+
+        if Csv_writer.iterator == 0:
+            csvwriter.writerow(
+                ['Pozycja wozu strażackiego (numer sektora)', 'ID palącego się sektora',
+                 'Odległość wozu od sektora (km)'])
+            csvwriter.writerow([''])
+
+
+        csvwriter.writerow(['Iteracja nr' + ' ' + str(Csv_writer.iterator+1)])
+        for i in firefightersSectorsData:
+            csvwriter.writerow(i)
 
 
     def save_to_file(self):
@@ -286,6 +299,7 @@ class Csv_writer:
         self.file3.close()
         self.file4.close()
         self.file5.close()
+        self.file6.close()
         print("Liczba iteracji: " + str(Csv_writer.iterator))
 
         Csv_writer.iterator = 0

@@ -131,15 +131,22 @@ class Simulation:
 
             # Zapisywanie danych symulacji do plików CSV
 
+
+            firefightersSectorsDistance = list()
+
+
             pozycje = list(Firefighter.locations.values())
             # print(self.forest_area.get_sector_distance(305,205))
-            for x in self.forest_area.sectors_on_fire:
-                z = 0
-                for y in pozycje:
-                    print("odległosc wozu w sektorze: ", pozycje[z] ,"od pozaru w sektorze:",x,"wynosi:", self.forest_area.get_sector_distance(x, pozycje[z]))
-                    if (z < self.firefighters_limit):
-                        z+=1
+            z = 0
+            for y in pozycje:
+                for x in self.forest_area.sectors_on_fire:
+                    print("odległosc wozu w sektorze: ", pozycje[z], "od pozaru w sektorze:", x, "wynosi:", self.forest_area.get_sector_distance(x, pozycje[z]) )
+                    firefightersSectorsDistance.append( (pozycje[z], x, round(self.forest_area.get_sector_distance(x, pozycje[z]), 2)))
+                firefightersSectorsDistance.append((''))
+                if (z < self.firefighters_limit):
+                    z+=1
 
+            self.csv_writer.write_firefighters_from_sectors_distance(firefightersSectorsDistance)
             # print("sektory w ogniu" ,self.forest_area.sectors_on_fire)
             self.csv_writer.write_indiv_1(self.transfer.get_sectors_data())
             self.csv_writer.write_indiv_2(self.transfer.get_sectors_data())
