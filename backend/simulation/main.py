@@ -135,9 +135,10 @@ class Simulation:
             # print(self.forest_area.get_sector_distance(305,205))
             for x in self.forest_area.sectors_on_fire:
                 z = 0
-                print("odległosc wozu w sektorze: ", pozycje[z] ,"od pozaru w sektorze:",x,"wynosi:", self.forest_area.get_sector_distance(x, pozycje[z]))
-                if (z < self.firefighters_limit):
-                    z+=1
+                for y in pozycje:
+                    print("odległosc wozu w sektorze: ", pozycje[z] ,"od pozaru w sektorze:",x,"wynosi:", self.forest_area.get_sector_distance(x, pozycje[z]))
+                    if (z < self.firefighters_limit):
+                        z+=1
 
             # print("sektory w ogniu" ,self.forest_area.sectors_on_fire)
             self.csv_writer.write_indiv_1(self.transfer.get_sectors_data())
