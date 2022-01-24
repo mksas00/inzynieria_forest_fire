@@ -134,12 +134,15 @@ class Firefighter:
 
 
         if (self.emotion == 1 and self.sector.state < 8):
+            print('gorsza sutuacja')
             self.sector.state = self.sector.state + self.emotion
             self.sector.fuel += 80
         elif (self.emotion == 0):
+            print('bez zmian')
             self.sector.state = self.sector.state + self.emotion
             self.sector.fuel += 100
         elif (self.emotion == -1):
+            print('lepsza sytuacja')
             self.sector.state = self.sector.state + self.emotion
             self.sector.fuel += 120
         elif (self.sector.state >= 8):
